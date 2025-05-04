@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block main %}
+<div>
+    <div class="main-content">
+        <form method="GET" action="/places-list">
+            <div class="search-container">
+                <input type="text" name="query" class="search-input" placeholder="Начните поиск интересующих вас мест...">
+                <button type="submit" class="search-button">Поиск</button>
+            </div>
+            <hr>
+            <div class="filters">
+                <div class="category-filter">
+                    <h2>Категории</h2>
+                    <label for="food_filter">Еда</label>
+                    <input id="food_filter" type="checkbox" name="food_filter">
+
+                    <br>
+                    <br>
+
+                    <label for="entertainments_filter">Развлечения</label>
+                    <input id="entertainments_filter" type="checkbox" name="entertainments_filter">
+
+                    <br>
+                    <br>
+
+                    <label for="purchases_filter">Покупки</label>
+                    <input id="purchases_filter" type="checkbox" name="purchases_filter">
+
+                    <br>
+                    <br>
+                </div>
+                <div class="region-and-rating">
+                    <div class="region">
+                        <h2>Регион</h2>
+                        <input id="region-input" type="text" name="near" placeholder="Введите название местности...">
+                    </div>
+                    <div class="rating">
+                        <h2>Рейтинг</h2>
+                        От: <input class="rating_filter" step="0.1" max="10" type="number" name="rating_from">
+                        до: <input class="rating_filter" step="0.1" max="10" type="number" name="rating_to">
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <hr>
+</div>
+<div class="places-list">
+    <h1>Результаты:</h1>
+    {% for i in places %}
+        {{ i.name }}<br>
+        Адрес: {{ i.location.formatted_address }}<br>
+        {% if i.website %}
+            Сайт: <a href="{{i.website}}">{{ i.website }}</a> <br>
+        {% else %}
+            Сайт отсутствует<br>
+        {% endif %}
+        {% if i.rating %}
+            Рейтинг: {{ i.rating }}/10<br>
+        {% else %}
+            Рейтинг отсутствует<br>
+        {% endif %}
+        <br>
+        <hr>
+        <br>
+    {% endfor %}
+</div>
+{% endblock %}
