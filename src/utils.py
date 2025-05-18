@@ -84,3 +84,4 @@ def get_places(data: dict,query: dict) -> list:
     """
     data = rating_filter(data,query)
     return data
+
