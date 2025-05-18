@@ -7,5 +7,3 @@ app = FastAPI()
 app.mount('/static',StaticFiles(directory='static'))
 app.include_router(search_places.router)
 
-
-

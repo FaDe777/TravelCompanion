@@ -6,19 +6,23 @@ category_ids = {
 
 
 def get_categories(query: dict) -> str:
-    """Обработка категорий"""
-    filters = []
+    """
+    Обработка категорий
 
-    for i in query:
-        category_num = category_ids.get(i, "")
-        if category_num:
-            filters.append(str(category_num))
-
-    return ",".join(filters)
+    :param query: Словарь с параметрами url запроса
+    :return: Строка с названиями категорий разделёнными запятой
+    """
+    filters = ",".join([str(category_ids[i]) for i in query if category_ids.get(i, "")])
+    return filters
 
 
 def generate_params(query: dict) -> dict:
-    """Создание параметров для запроса к foursquare api"""
+    """
+    Создание параметров для запроса к foursquare api
+
+    :param query: Словарь с параметрами url запроса
+    :return: Словарь с обработанными параметрами для запроса
+    """
     needed_params = ('query','near')
     params = {}
 
@@ -39,7 +43,13 @@ def generate_params(query: dict) -> dict:
 
 
 def rating_filter(data: dict,query: dict) -> list:
-    """Фильтрация по рейтингу"""
+    """
+    Фильтрация по рейтингу
+
+    :param data: Словарь с данными о местностях
+    :param query: Словарь с параметрами url запроса
+    :return: Список с отфильтрованными по рейтингу данными о местностях
+    """
     places = []
 
     rating_from = query.get('rating_from')
@@ -65,6 +75,12 @@ def rating_filter(data: dict,query: dict) -> list:
 
 
 def get_places(data: dict,query: dict) -> list:
-    """Дополнительная обработка полученных результатов, применение фильтров и т.д."""
+    """
+    Дополнительная обработка полученных результатов, применение фильтров и т.д.
+
+    :param data: Словарь с данными о местностях
+    :param query: Словарь с параметрами url запроса
+    :return: Список с данными о местностях
+    """
     data = rating_filter(data,query)
     return data
